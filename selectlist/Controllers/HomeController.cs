@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 using selectlist.Models;
 
 namespace selectlist.Controllers
@@ -13,12 +14,33 @@ namespace selectlist.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private const string USERNAME = "username";
+        private const string COUNTRY = "country";
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        private string CurrentUserName {
+            get {
+                return HttpContext.Session.GetString(USERNAME);
+            }
+            set {
+                HttpContext.Session.SetString(USERNAME, value);
+            }
+        }
+
+        private int CurrentUserCountry {
+            get {
+                return Int32.Parse(HttpContext.Session.GetString(COUNTRY));
+            }
+            set {
+                HttpContext.Session.SetString(COUNTRY, value.ToString());
+            }
+        }
+
+        [HttpGet]
         public IActionResult Index()
         {
             var allCountries = GetAllCountries();
@@ -27,6 +49,24 @@ namespace selectlist.Controllers
                 Countries = GetSelectListItems(allCountries)
             };
 
+            return View(userModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateUser(UserModel userModel) {
+            CurrentUserName = userModel.UserName;
+            CurrentUserCountry = Int32.Parse(userModel.Country);
+            return RedirectToAction(nameof(ViewUser));
+        }
+
+        [HttpGet]
+        public IActionResult ViewUser() {
+            var allCountries = GetAllCountries();
+            var userModel = new UserModel() {
+                UserName = CurrentUserName,
+                Country = allCountries.FirstOrDefault(c => c.Id == CurrentUserCountry).Name,
+                Countries = GetSelectListItems(allCountries)
+            };
             return View(userModel);
         }
 

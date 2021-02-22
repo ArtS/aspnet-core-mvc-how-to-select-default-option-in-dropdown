@@ -1,0 +1,29 @@
+@model UserModel
+@{
+    ViewData["Title"] = $"Welcome, {Model.UserName}!";
+}
+
+<div class="jumbotron">
+  <h1 class="display-4">Welcome, @Model.UserName!</h1>
+  <p class="lead">Thanks for registering!</p>
+  <hr class="my-4">
+  <p>Your personal information provided below:</p>
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">User name</th>
+      <td>@Model.UserName</td>
+    </tr>
+    <tr>
+      <th scope="row">Country</th>
+      <td>@Model.Country</td>
+    </tr>
+  </tbody>
+</table>
+</div>

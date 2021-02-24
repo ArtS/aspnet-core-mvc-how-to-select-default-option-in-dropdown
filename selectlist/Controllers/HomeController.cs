@@ -45,29 +45,33 @@ namespace selectlist.Controllers
         {
             var allCountries = GetAllCountries();
             var userModel = new UserModel() {
-                Country = allCountries.ToList()[12].Id.ToString(),
+                // Set default country to "Australia"
+                Country = allCountries.FirstOrDefault(c => c.Name == "Australia").Id,
+                // Set list off all couintries that are available for selection
                 Countries = GetSelectListItems(allCountries)
             };
 
             return View(userModel);
-        }
-
-        [HttpPost]
-        public IActionResult CreateUser(UserModel userModel) {
-            CurrentUserName = userModel.UserName;
-            CurrentUserCountry = Int32.Parse(userModel.Country);
-            return RedirectToAction(nameof(ViewUser));
         }
 
         [HttpGet]
         public IActionResult ViewUser() {
             var allCountries = GetAllCountries();
+            var currentCountry = allCountries.FirstOrDefault(c => c.Id == CurrentUserCountry);
             var userModel = new UserModel() {
                 UserName = CurrentUserName,
-                Country = allCountries.FirstOrDefault(c => c.Id == CurrentUserCountry).Name,
+                Country = currentCountry.Id,
+                CountryDisplayName = currentCountry.Name,
                 Countries = GetSelectListItems(allCountries)
             };
             return View(userModel);
+        }
+        
+        [HttpPost]
+        public IActionResult CreateUser(UserModel userModel) {
+            CurrentUserName = userModel.UserName;
+            CurrentUserCountry = userModel.Country;
+            return RedirectToAction(nameof(ViewUser));
         }
 
         public IActionResult Privacy()

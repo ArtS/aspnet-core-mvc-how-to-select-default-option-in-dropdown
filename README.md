@@ -1,4 +1,4 @@
-This is a sample project to go with the article "[][1]"
+This is a sample project to go with the article "[How To Set Default Option In Select List In ASP.NET Core MVC][1]"
 
 Download / `git clone` the code, then from the code folder run the followning:
 
@@ -25,4 +25,4 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FO
 OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]:https://nimblegecko.com/
+[1]:https://nimblegecko.com/how-to-set-default-option-in-select-list-in-asp-net-core-mvc/
